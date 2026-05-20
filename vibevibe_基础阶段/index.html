@@ -166,6 +166,103 @@
             flex: 1;
         }
 
+        /* 作品展示区 */
+        .works-section {
+            margin-top: 32px;
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 
+                0 1px 3px rgba(0, 0, 0, 0.05),
+                0 4px 12px var(--tech-glow);
+            border: 1px solid rgba(37, 99, 235, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .works-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--light-blue), var(--primary-blue));
+        }
+
+        .works-section h2 {
+            font-size: 20px;
+            color: var(--text-dark);
+            margin-bottom: 24px;
+            font-weight: 600;
+            letter-spacing: -0.01em;
+        }
+
+        .works-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .work-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid var(--border-light);
+            cursor: pointer;
+            text-decoration: none;
+            display: block;
+        }
+
+        .work-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(37, 99, 235, 0.15);
+            border-color: var(--light-blue);
+        }
+
+        .work-card-image {
+            width: 100%;
+            height: 140px;
+            background: linear-gradient(135deg, #2563eb 0%, #60a5fa 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: white;
+        }
+
+        .work-card-content {
+            padding: 16px;
+        }
+
+        .work-card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .work-card-desc {
+            font-size: 13px;
+            color: var(--text-medium);
+            line-height: 1.5;
+            margin-bottom: 12px;
+        }
+
+        .work-card-link {
+            font-size: 13px;
+            color: var(--primary-blue);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .work-card-link:hover {
+            text-decoration: underline;
+        }
+
         /* 悬浮聊天窗口 */
         .chat-widget {
             position: fixed;
@@ -430,6 +527,14 @@
             .info-label {
                 min-width: auto;
             }
+
+            .works-section {
+                padding: 32px 24px;
+            }
+
+            .works-grid {
+                grid-template-columns: 1fr;
+            }
         }
 
         @media (max-width: 480px) {
@@ -511,6 +616,39 @@
                         </li>
                     </ul>
                 </div>
+            </div>
+        </div>
+
+        <!-- 作品展示区 -->
+        <div class="works-section">
+            <h2>我的作品</h2>
+            <div class="works-grid">
+                <a href="projects/project1.html" class="work-card">
+                    <div class="work-card-image">🚀</div>
+                    <div class="work-card-content">
+                        <h3 class="work-card-title">项目1</h3>
+                        <p class="work-card-desc">这是项目1的一句话介绍，之后会完善内容。</p>
+                        <span class="work-card-link">查看详情 →</span>
+                    </div>
+                </a>
+
+                <a href="projects/project2.html" class="work-card">
+                    <div class="work-card-image">🎨</div>
+                    <div class="work-card-content">
+                        <h3 class="work-card-title">项目2</h3>
+                        <p class="work-card-desc">这是项目2的一句话介绍，之后会完善内容。</p>
+                        <span class="work-card-link">查看详情 →</span>
+                    </div>
+                </a>
+
+                <a href="projects/project3.html" class="work-card">
+                    <div class="work-card-image">🏆</div>
+                    <div class="work-card-content">
+                        <h3 class="work-card-title">项目3</h3>
+                        <p class="work-card-desc">这是项目3的一句话介绍，之后会完善内容。</p>
+                        <span class="work-card-link">查看详情 →</span>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
