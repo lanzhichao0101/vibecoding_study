@@ -1,0 +1,63 @@
+vibevibe_基础阶段/项目记录.md
+  c5977506e873c176 4 gitai:{"mixed_line_ranges":[{"Single":4}],"operations":[]}
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "689804092975b9ef91675166b2536ebf0b9b0ab6",
+  "prompts": {
+    "03043790cfe2cdb0": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a0a87eb8c64614732f99e01",
+        "model": "Doubao-Seed-2.0-Code__dev"
+      },
+      "human_author": "lanzhichao <lanzhichao0101@163.com>",
+      "messages": [],
+      "total_additions": 138,
+      "total_deletions": 0,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "c5977506e873c176": {
+      "agent_id": {
+        "tool": "trae-cue",
+        "id": "ai_tab-icr-7342c8dd-9478-4669-9fda-b0859e364ce6",
+        "model": "default"
+      },
+      "human_author": "lanzhichao <lanzhichao0101@163.com>",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 0,
+      "overriden_lines": 1
+    }
+  },
+  "attestation_metadata": {
+    "vibevibe_基础阶段/项目记录.md": [
+      {
+        "hash": "c5977506e873c176",
+        "line_ranges": [
+          {
+            "Single": 4
+          }
+        ],
+        "mixed_line_ranges": [
+          {
+            "Single": 4
+          }
+        ],
+        "operations": []
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "03043790cfe2cdb0": {
+      "tool": "trae",
+      "conversation_id": "6a0a87eb8c64614732f99e01",
+      "session_id": "6a0a87eb8c64614732f99e01",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
