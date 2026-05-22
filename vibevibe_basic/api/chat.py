@@ -18,11 +18,34 @@ CORS(app)
 CONFIG_FILE = os.path.join(os.path.dirname(__file__), 'config.json')
 
 def load_config():
-    """加载配置文件"""
-    if os.path.exists(CONFIG_FILE):
-        with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
-            return json.load(f)
-    return {}
+    """加载配置文件（优先使用环境变量）"""
+    config = {}
+    
+    # 优先从环境变量读取
+    model_url = os.getenv('MINIMAX_MODEL_URL')
+    api_key = os.getenv('MINIMAX_API_KEY')
+    group_id = os.getenv('MINIMAX_GROUP_ID')
+    
+    if model_url:
+        config['model_url'] = model_url
+    if api_key:
+        config['api_key'] = api_key
+    if group_id:
+        config['group_id'] = group_id
+    
+    # 如果环境变量没有配置，尝试从配置文件读取
+    if not config.get('model_url') or not config.get('api_key'):
+        if os.path.exists(CONFIG_FILE):
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                file_config = json.load(f)
+                if not config.get('model_url'):
+                    config['model_url'] = file_config.get('model_url', '')
+                if not config.get('api_key'):
+                    config['api_key'] = file_config.get('api_key', '')
+                if not config.get('group_id'):
+                    config['group_id'] = file_config.get('group_id', '')
+    
+    return config
 
 def save_config(config):
     """保存配置文件"""
@@ -218,7 +241,8 @@ def chat():
         if not message.strip():
             return jsonify({'error': '消息不能为空'}), 400
         
-        # 获取配置
+        # 获取配置（每次请求都重新加载，支持动态修改）
+        config = load_config()
         model_url = config.get('model_url', '')
         api_key = config.get('api_key', '')
         group_id = config.get('group_id', '')
@@ -226,7 +250,13 @@ def chat():
         if not model_url:
             return jsonify({
                 'error': '请先配置模型URL',
-                'message': '你还没有配置大模型API，请在配置页面设置模型URL和API密钥'
+                'message': '你还没有配置大模型API，请设置环境变量MINIMAX_MODEL_URL'
+            }), 400
+        
+        if not api_key:
+            return jsonify({
+                'error': '请先配置API密钥',
+                'message': '你还没有配置API密钥，请设置环境变量MINIMAX_API_KEY'
             }), 400
         
         # 调用大模型
@@ -239,7 +269,8 @@ def chat():
 
 @app.route('/api/config', methods=['GET'])
 def get_config():
-    """获取当前配置"""
+    """获取当前配置（不返回API Key）"""
+    config = load_config()
     return jsonify({
         'model_url': config.get('model_url', ''),
         'api_key_set': bool(config.get('api_key', '')),
@@ -248,17 +279,28 @@ def get_config():
 
 @app.route('/api/config', methods=['POST'])
 def set_config():
-    """设置配置"""
+    """设置配置（保存到文件）"""
     try:
         data = request.get_json()
         model_url = data.get('model_url', '').strip()
         api_key = data.get('api_key', '').strip()
         group_id = data.get('group_id', '').strip()
         
-        config['model_url'] = model_url
-        config['api_key'] = api_key
-        config['group_id'] = group_id
-        save_config(config)
+        # 只保存到文件，不覆盖环境变量
+        file_config = {}
+        if os.path.exists(CONFIG_FILE):
+            with open(CONFIG_FILE, 'r', encoding='utf-8') as f:
+                file_config = json.load(f)
+        
+        # 如果环境变量没有设置，才保存到文件
+        if not os.getenv('MINIMAX_MODEL_URL'):
+            file_config['model_url'] = model_url
+        if not os.getenv('MINIMAX_API_KEY'):
+            file_config['api_key'] = api_key
+        if not os.getenv('MINIMAX_GROUP_ID'):
+            file_config['group_id'] = group_id
+        
+        save_config(file_config)
         
         return jsonify({'success': True, 'message': '配置保存成功'})
         
@@ -273,13 +315,5 @@ def test():
 if __name__ == '__main__':
     # 确保目录存在
     os.makedirs(os.path.dirname(__file__), exist_ok=True)
-    
-    # 如果没有配置文件，创建默认配置
-    if not os.path.exists(CONFIG_FILE):
-        save_config({
-            'model_url': '',
-            'api_key': '',
-            'group_id': ''
-        })
     
     app.run(host='0.0.0.0', port=5000, debug=True)
