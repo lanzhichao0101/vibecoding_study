@@ -1,0 +1,13 @@
+# 配置文件
+api/config.json
+
+# 日志文件
+*.log
+
+# 临时文件
+*.tmp
+.DS_Store
+
+# 虚拟环境
+venv/
+.env
