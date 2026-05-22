@@ -1048,7 +1048,9 @@
                     <h3>巷猫的数字分身</h3>
                     <p>有问题随时问我~</p>
                 </div>
-                <button class="chat-close-btn" id="chatCloseBtn">×</button>
+                <div class="chat-window-actions">
+                    <button class="chat-close-btn" id="chatCloseBtn">×</button>
+                </div>
             </div>
             <div class="chat-window-messages" id="chatWindowMessages">
                 <div class="message assistant">
@@ -1104,15 +1106,8 @@
                 }
             }
 
-            // 默认回答
-            const defaultResponses = [
-                `这是一个好问题！我是${knowledgeBase.name}，一名${knowledgeBase.identity}，最近在${knowledgeBase.recentWork}。`,
-                `感谢你的提问！我目前专注于${knowledgeBase.strengths.join('、')}这些方向。`,
-                `很有趣的问题！我喜欢${knowledgeBase.interests.join('、')}，并且${knowledgeBase.features}。`,
-                `这个问题我需要想一想...不过你可以问问我：你现在在做什么？你有哪些作品？或者怎么联系你？`
-            ];
-            
-            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+            // 如果没有匹配到FAQ规则，输出友好提示
+            return `不好意思，我的大脑宕机了，问我点简单的问题吧，比如：你现在在做什么？你有哪些作品？怎么联系你？`;
         }
 
         // 聊天功能
@@ -1124,18 +1119,47 @@
             chatWindowMessages.scrollTop = chatWindowMessages.scrollHeight;
         }
 
-        function sendMessage() {
+        async function sendMessage() {
             const message = chatWindowInput.value.trim();
             if (!message) return;
 
             addMessage(message, true);
             chatWindowInput.value = '';
 
-            // 模拟思考延迟
-            setTimeout(() => {
-                const response = getResponse(message);
-                addMessage(response, false);
-            }, 800);
+            // 添加正在输入提示
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'message assistant typing';
+            typingIndicator.innerHTML = '<div class="message-content"><span class="typing-dots">...</span></div>';
+            chatWindowMessages.appendChild(typingIndicator);
+            chatWindowMessages.scrollTop = chatWindowMessages.scrollHeight;
+
+            try {
+                const response = await fetch('http://localhost:5000/api/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ message: message })
+                });
+
+                const data = await response.json();
+
+                // 移除正在输入提示
+                typingIndicator.remove();
+
+                if (data.response) {
+                    addMessage(data.response, false);
+                } else if (data.error) {
+                    // 如果API未配置，使用本地FAQ回复
+                    const fallbackResponse = getResponse(message);
+                    addMessage(fallbackResponse, false);
+                }
+            } catch (error) {
+                // 网络错误时使用本地FAQ回复
+                typingIndicator.remove();
+                const fallbackResponse = getResponse(message);
+                addMessage(fallbackResponse, false);
+            }
         }
 
         chatWindowSendBtn.addEventListener('click', sendMessage);
