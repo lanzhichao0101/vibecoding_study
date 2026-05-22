@@ -1,0 +1,124 @@
+vibevibe_基础阶段/index.html
+  03043790cfe2cdb0 266-567,840-856,973-1060,1063-1065,1268-1307 gitai:{"mixed_line_ranges":[{"Single":980},{"Single":991},{"Single":1002},{"Single":1013}],"operations":[{"operation_id":"6a0fcae18c64614732f99f95","tool_type":"agent","tool_id":"Edit","line_ranges":[{"Range":[266,567]},{"Range":[840,856]},{"Range":[973,1060]},{"Range":[1063,1065]},{"Range":[1268,1307]}]}]}
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "757289f1a82cee776fbb1e45977bf0404625eb52",
+  "prompts": {
+    "03043790cfe2cdb0": {
+      "agent_id": {
+        "tool": "trae",
+        "id": "6a0a87eb8c64614732f99e01",
+        "model": "Doubao_1_6__dev"
+      },
+      "human_author": "lanzhichao <lanzhichao0101@163.com>",
+      "messages": [],
+      "total_additions": 450,
+      "total_deletions": 0,
+      "accepted_lines": 446,
+      "overriden_lines": 4
+    }
+  },
+  "attestation_metadata": {
+    "vibevibe_基础阶段/index.html": [
+      {
+        "hash": "03043790cfe2cdb0",
+        "line_ranges": [
+          {
+            "Range": [
+              266,
+              567
+            ]
+          },
+          {
+            "Range": [
+              840,
+              856
+            ]
+          },
+          {
+            "Range": [
+              973,
+              1060
+            ]
+          },
+          {
+            "Range": [
+              1063,
+              1065
+            ]
+          },
+          {
+            "Range": [
+              1268,
+              1307
+            ]
+          }
+        ],
+        "mixed_line_ranges": [
+          {
+            "Single": 980
+          },
+          {
+            "Single": 991
+          },
+          {
+            "Single": 1002
+          },
+          {
+            "Single": 1013
+          }
+        ],
+        "operations": [
+          {
+            "operation_id": "6a0fcae18c64614732f99f95",
+            "tool_type": "agent",
+            "tool_id": "Edit",
+            "line_ranges": [
+              {
+                "Range": [
+                  266,
+                  567
+                ]
+              },
+              {
+                "Range": [
+                  840,
+                  856
+                ]
+              },
+              {
+                "Range": [
+                  973,
+                  1060
+                ]
+              },
+              {
+                "Range": [
+                  1063,
+                  1065
+                ]
+              },
+              {
+                "Range": [
+                  1268,
+                  1307
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "remote_transcripts": {
+    "03043790cfe2cdb0": {
+      "tool": "trae",
+      "conversation_id": "6a0a87eb8c64614732f99e01",
+      "session_id": "6a0a87eb8c64614732f99e01",
+      "status": "remote_only",
+      "message": "Remote transcript resolution is not implemented yet for TRAE prompts."
+    }
+  }
+}
